@@ -122,7 +122,11 @@ const ProfilePage = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-3">
-                <button className="flex-1 py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-xl transition-colors">
+                <button
+                  onClick={() => setShowEditModal(true)}
+                  className="flex-1 py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+                >
+                  <Edit className="w-4 h-4" />
                   Edit Profile
                 </button>
                 <button className="flex-1 py-3 px-4 bg-gray-100 dark:bg-dark-700 hover:bg-gray-200 dark:hover:bg-dark-600 text-dark-900 dark:text-white font-medium rounded-xl transition-colors">
