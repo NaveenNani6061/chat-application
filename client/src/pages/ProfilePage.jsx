@@ -137,6 +137,12 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Profile Edit Modal */}
+      <ProfileEdit
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+      />
     </div>
   );
 };
