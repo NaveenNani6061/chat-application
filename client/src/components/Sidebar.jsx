@@ -20,6 +20,18 @@ const Sidebar = () => {
   const { onlineUsers } = useSocket();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProfileUser, setSelectedProfileUser] = useState(null);
+  const [showUserProfile, setShowUserProfile] = useState(false);
+
+  const handleUserProfileClick = (user, e) => {
+    e.stopPropagation();
+    setSelectedProfileUser(user);
+    setShowUserProfile(true);
+  };
+
+  const handleChatClick = (user) => {
+    setSelectedUser(user);
+  };
 
   useEffect(() => {
     getUsers();
