@@ -8,10 +8,7 @@ const connectToMongoDB = async () => {
       process.env.MONGODB_URI ? "✓ URI provided" : "✗ URI missing",
     );
 
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
 
     console.log("✅ Connected to MongoDB successfully");
   } catch (error) {
