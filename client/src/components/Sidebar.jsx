@@ -126,44 +126,59 @@ const Sidebar = () => {
         ) : (
           <div className="p-2">
             {filteredUsers.map((user) => (
-              <button
+              <div
                 key={user._id}
-                onClick={() => setSelectedUser(user)}
-                className={`w-full p-4 flex items-center gap-3 rounded-xl transition-all duration-200 hover:bg-white dark:hover:bg-dark-700 group ${
+                className={`relative group rounded-xl transition-all duration-200 hover:bg-white dark:hover:bg-dark-700 ${
                   selectedUser?._id === user._id
                     ? "bg-white dark:bg-dark-700 shadow-sm ring-1 ring-primary-500/20"
                     : ""
                 }`}
               >
-                <div className="relative">
-                  <img
-                    src={user.profilePic || "/avatar.png"}
-                    alt={user.fullName}
-                    className="size-12 object-cover rounded-full ring-2 ring-white dark:ring-dark-600"
-                  />
-                  {onlineUsers.includes(user._id) && (
-                    <div className="absolute -bottom-0.5 -right-0.5 size-4 bg-green-500 rounded-full ring-2 ring-white dark:ring-dark-700"></div>
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0 text-left">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-dark-900 dark:text-white truncate">
-                      {user.fullName}
-                    </h3>
-                    {unreadCounts[user._id] > 0 && (
-                      <div className="size-5 bg-primary-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
-                        {unreadCounts[user._id] > 9
-                          ? "9+"
-                          : unreadCounts[user._id]}
-                      </div>
+                <button
+                  onClick={() => handleChatClick(user)}
+                  className="w-full p-4 flex items-center gap-3"
+                >
+                  <div className="relative">
+                    <img
+                      src={user.profilePic || "/avatar.png"}
+                      alt={user.fullName}
+                      className="size-12 object-cover rounded-full ring-2 ring-white dark:ring-dark-600"
+                    />
+                    {onlineUsers.includes(user._id) && (
+                      <div className="absolute -bottom-0.5 -right-0.5 size-4 bg-green-500 rounded-full ring-2 ring-white dark:ring-dark-700"></div>
                     )}
                   </div>
-                  <p className="text-sm text-dark-500 dark:text-dark-400">
-                    {onlineUsers.includes(user._id) ? "Online" : "Offline"}
-                  </p>
-                </div>
-              </button>
+
+                  <div className="flex-1 min-w-0 text-left">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-medium text-dark-900 dark:text-white truncate">
+                        {user.fullName}
+                      </h3>
+                      <div className="flex items-center gap-1">
+                        {unreadCounts[user._id] > 0 && (
+                          <div className="size-5 bg-primary-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                            {unreadCounts[user._id] > 9
+                              ? "9+"
+                              : unreadCounts[user._id]}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-dark-500 dark:text-dark-400">
+                      {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                    </p>
+                  </div>
+                </button>
+
+                {/* Profile view button */}
+                <button
+                  onClick={(e) => handleUserProfileClick(user, e)}
+                  className="absolute top-2 right-2 p-2 bg-gray-100 dark:bg-dark-600 hover:bg-gray-200 dark:hover:bg-dark-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  title="View Profile"
+                >
+                  <Info className="w-4 h-4 text-dark-600 dark:text-dark-400" />
+                </button>
+              </div>
             ))}
           </div>
         )}
