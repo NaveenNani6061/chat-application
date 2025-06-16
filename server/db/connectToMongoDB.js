@@ -15,11 +15,21 @@ const connectToMongoDB = async () => {
     console.log("❌ Error connecting to MongoDB:", error.message);
 
     if (error.message.includes("ECONNREFUSED")) {
-      console.log("💡 Tip: Make sure MongoDB is running or use MongoDB Atlas");
+      console.log("💡 Tip: Make sure MongoDB is running locally");
+      console.log(
+        "💡 Or update MONGODB_URI in server/.env to use MongoDB Atlas",
+      );
     }
 
-    // Exit process with failure
-    process.exit(1);
+    if (error.message.includes("ENOTFOUND")) {
+      console.log("💡 Tip: Check your MongoDB Atlas connection string");
+      console.log(
+        "💡 Make sure to replace <username>, <password>, and cluster details",
+      );
+    }
+
+    console.log("⚠️  Server will continue running without database connection");
+    console.log("📝 Update your MongoDB configuration in server/.env file");
   }
 };
 
