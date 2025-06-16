@@ -1,10 +1,11 @@
 import Conversation from "../models/Conversation.js";
 import Message from "../models/Message.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const sendMessage = async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, image } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
@@ -18,19 +19,24 @@ export const sendMessage = async (req, res) => {
       });
     }
 
+    let imageUrl;
+    if (image) {
+      // Upload base64 image to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
+    }
+
     const newMessage = new Message({
       senderId,
       receiverId,
       message,
+      image: imageUrl,
     });
 
     if (newMessage) {
       conversation.messages.push(newMessage._id);
       conversation.lastMessage = newMessage._id;
     }
-
-    // await conversation.save();
-    // await newMessage.save();
 
     // this will run in parallel
     await Promise.all([conversation.save(), newMessage.save()]);
