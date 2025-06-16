@@ -1,6 +1,8 @@
-import { Camera, Mail, User, ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Camera, Mail, User, ArrowLeft, Edit } from "lucide-react";
 import { Link } from "react-router-dom";
 import useAuthStore from "../stores/authStore";
+import ProfileEdit from "../components/ProfileEdit";
 
 const ProfilePage = () => {
   const { authUser } = useAuthStore();
