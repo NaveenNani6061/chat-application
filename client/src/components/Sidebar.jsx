@@ -202,6 +202,16 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+
+      {/* User Profile Modal */}
+      <UserProfile
+        user={selectedProfileUser}
+        isOpen={showUserProfile}
+        onClose={() => {
+          setShowUserProfile(false);
+          setSelectedProfileUser(null);
+        }}
+      />
     </aside>
   );
 };
