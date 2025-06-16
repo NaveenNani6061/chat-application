@@ -6,12 +6,13 @@ import {
   checkAuth,
 } from "../controllers/authController.js";
 import protectRoute from "../middleware/protectRoute.js";
+import checkDatabase from "../middleware/checkDatabase.js";
 
 const router = express.Router();
 
-router.post("/signup", signup);
+router.post("/signup", checkDatabase, signup);
 
-router.post("/login", login);
+router.post("/login", checkDatabase, login);
 
 router.post("/logout", logout);
 
