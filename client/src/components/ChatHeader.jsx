@@ -8,7 +8,15 @@ import UserProfile from "./UserProfile";
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
   const { onlineUsers } = useSocket();
+  const [showCall, setShowCall] = useState(false);
+  const [callType, setCallType] = useState("voice");
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const isOnline = onlineUsers.includes(selectedUser._id);
+
+  const handleCall = (type) => {
+    setCallType(type);
+    setShowCall(true);
+  };
 
   return (
     <div className="p-4 border-b border-gray-200 dark:border-dark-600 bg-white dark:bg-dark-800">
