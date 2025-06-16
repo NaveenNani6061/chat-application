@@ -26,7 +26,7 @@ function App() {
     );
 
   return (
-    <div data-theme="coffee">
+    <div className="min-h-screen bg-white dark:bg-dark-900">
       <SocketContextProvider>
         <Routes>
           <Route
@@ -47,7 +47,31 @@ function App() {
           />
         </Routes>
 
-        <Toaster />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#1e293b",
+              color: "#f8fafc",
+              borderRadius: "12px",
+              padding: "12px 16px",
+              fontSize: "14px",
+            },
+            success: {
+              iconTheme: {
+                primary: "#10b981",
+                secondary: "#ffffff",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#ffffff",
+              },
+            },
+          }}
+        />
       </SocketContextProvider>
     </div>
   );
