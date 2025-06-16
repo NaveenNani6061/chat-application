@@ -56,17 +56,47 @@ const ChatHeader = () => {
 
         {/* Action buttons */}
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-primary-500">
+          <button
+            onClick={() => handleCall("voice")}
+            className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-green-500"
+            title="Voice Call"
+          >
             <Phone className="w-5 h-5" />
           </button>
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-primary-500">
+          <button
+            onClick={() => handleCall("video")}
+            className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-blue-500"
+            title="Video Call"
+          >
             <Video className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => setShowUserProfile(true)}
+            className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-primary-500"
+            title="View Profile"
+          >
+            <Info className="w-5 h-5" />
           </button>
           <button className="p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg transition-colors text-dark-600 dark:text-dark-400 hover:text-primary-500">
             <MoreVertical className="w-5 h-5" />
           </button>
         </div>
       </div>
+
+      {/* Call Interface */}
+      <CallInterface
+        user={selectedUser}
+        callType={callType}
+        isOpen={showCall}
+        onClose={() => setShowCall(false)}
+      />
+
+      {/* User Profile Modal */}
+      <UserProfile
+        user={selectedUser}
+        isOpen={showUserProfile}
+        onClose={() => setShowUserProfile(false)}
+      />
     </div>
   );
 };
