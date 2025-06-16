@@ -1,6 +1,9 @@
-import { ArrowLeft, MoreVertical, Phone, Video } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, MoreVertical, Phone, Video, Info } from "lucide-react";
 import useChatStore from "../stores/chatStore";
 import { useSocket } from "../context/SocketContext";
+import CallInterface from "./CallInterface";
+import UserProfile from "./UserProfile";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
