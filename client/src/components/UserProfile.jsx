@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { X, MessageCircle, Phone, Video, Calendar, Globe } from "lucide-react";
 import { useSocket } from "../context/SocketContext";
 import useChatStore from "../stores/chatStore";
+import CallInterface from "./CallInterface";
 
 const UserProfile = ({ user, isOpen, onClose }) => {
   const { onlineUsers } = useSocket();
