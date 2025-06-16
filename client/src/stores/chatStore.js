@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios.js";
-import useAuthStore from "./authStore.js";
 
 const useChatStore = create((set, get) => ({
   messages: [],
@@ -10,6 +9,7 @@ const useChatStore = create((set, get) => ({
   isUsersLoading: false,
   isMessagesLoading: false,
   unreadCounts: {},
+  socket: null,
 
   getUsers: async () => {
     set({ isUsersLoading: true });
@@ -17,7 +17,7 @@ const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/users");
       set({ users: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to fetch users");
     } finally {
       set({ isUsersLoading: false });
     }
@@ -34,7 +34,7 @@ const useChatStore = create((set, get) => ({
       const { unreadCounts } = get();
       set({ unreadCounts: { ...unreadCounts, [userId]: 0 } });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to fetch messages");
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -49,15 +49,13 @@ const useChatStore = create((set, get) => ({
       );
       set({ messages: [...messages, res.data] });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to send message");
     }
   },
 
   subscribeToMessages: () => {
-    const { selectedUser } = get();
-    if (!selectedUser) return;
-
-    const socket = useAuthStore.getState().socket;
+    const { selectedUser, socket } = get();
+    if (!selectedUser || !socket) return;
 
     socket.on("newMessage", (newMessage) => {
       const isMessageSentFromSelectedUser =
@@ -81,8 +79,10 @@ const useChatStore = create((set, get) => ({
   },
 
   unsubscribeFromMessages: () => {
-    const socket = useAuthStore.getState().socket;
-    socket.off("newMessage");
+    const { socket } = get();
+    if (socket) {
+      socket.off("newMessage");
+    }
   },
 
   getUnreadCount: async () => {
@@ -95,6 +95,7 @@ const useChatStore = create((set, get) => ({
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+  setSocket: (socket) => set({ socket }),
 }));
 
 export default useChatStore;
